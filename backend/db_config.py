@@ -1,7 +1,13 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 class Config:
     DEBUG = False
     DEVELOPMENT = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://chmurki-postgressql.postgres.database.azure.com:5432/postgres?user=chmurki_adm@chmurki-postgressql&password={systemy123!}&sslmode=require'
+    SQLALCHEMY_DATABASE_URI = f"mysql+mysqldb://{os.getenv('DB_USER')}:{os.getenv('DB_PASS')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 
 
 class DevelopmentConfig(Config):
