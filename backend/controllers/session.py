@@ -1,5 +1,5 @@
-from app import db
-from db_models.User import User
+from backend import db
+from backend.db_models.User import User
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -25,7 +25,7 @@ def sign_in(login, given_password):
 
 def sign_up(login, user_password):
     username_check = User.query.filter_by(username=login).first()
-    if username_check is None and login is not "" and user_password is not "":
+    if username_check is None and login != "" and user_password != "":
         new_user = User(
             username=login, password=generate_password_hash(user_password))
         db.session.add(new_user)

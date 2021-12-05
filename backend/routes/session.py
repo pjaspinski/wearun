@@ -1,7 +1,7 @@
-from app import app
+from backend import app
 from flask import request, Response
 
-from controllers.session import sign_in, sign_up
+from backend.controllers.session import sign_in, sign_up
 
 
 @app.route("/")
@@ -12,16 +12,16 @@ def home():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
-    email = data['email']
+    username = data['username']
     password = data['password']
-    result = sign_in(email, password)
+    result = sign_in(username, password)
     return Response(status=200) if result else Response(status=400)
 
 
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
-    email = data['email']
+    username = data['username']
     password = data['password']
-    result = sign_up(email, password)
+    result = sign_up(username, password)
     return Response(status=200) if result else Response(status=400)
