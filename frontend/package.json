@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "log": "react-native log-android",
+    "reset_cache": "react-native start --reset-cache"
   },
   "dependencies": {
     "@babel/preset-env": "^7.16.4",
@@ -16,6 +18,7 @@
     "react": "17.0.2",
     "react-dom": "^17.0.2",
     "react-native": "0.66.1",
+    "react-native-geolocation-service": "^5.3.0-beta.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
     "react-native-web": "^0.17.5",

@@ -10,8 +10,11 @@ import {
 } from 'react-native';
 import colors from './resources/css/colors';
 import formElements from './resources/css/formElements';
+import {useStore} from '../Store';
 
 const LoginScreen = ({navigation}) => {
+  const {dispatch} = useStore();
+
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -35,6 +38,8 @@ const LoginScreen = ({navigation}) => {
     });
 
     if (res.status === 200) {
+      const user = await res.json();
+      dispatch({type: 'SET_USER', payload: user});
       navigation.navigate('Home');
       return;
     }

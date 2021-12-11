@@ -10,8 +10,11 @@ import {
 } from 'react-native';
 import colors from './resources/css/colors';
 import formElements from './resources/css/formElements';
+import {useStore} from '../Store';
 
 export default function RegisterScreen({navigation}) {
+  const {dispatch} = useStore();
+
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [secondPassword, serSecondPassword] = React.useState('');
@@ -45,6 +48,8 @@ export default function RegisterScreen({navigation}) {
 
     switch (res.status) {
       case 200:
+        const user = await res.json();
+        dispatch({type: 'SET_USER', payload: user});
         navigation.navigate('Home');
         return;
       case 404:

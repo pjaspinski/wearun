@@ -22,4 +22,5 @@ app = init_app()
 # It's important that all routes are imported here.
 # Don't let your formatter move these imports to the top of the file!
 # Try Ctrl+Shift+P > File: Save without formatting
-import backend.routes.session
+from backend.routes import (session, weather)
+

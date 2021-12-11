@@ -18,9 +18,9 @@ def sign_in(login, given_password):
     found_user = User.query.filter_by(username=login).first()
     if found_user is not None and check_password_hash(found_user.password, given_password):
         user_session.set_current_user_id(found_user.id)
-        return True  # Pomyslne logowanie
+        return found_user.get_clean_version()  # Pomyslne logowanie
     else:
-        return False  # Logowanie nie powiodlo sie, niepoprawna nazwa uzytkownika lub haslo
+        return None  # Logowanie nie powiodlo sie, niepoprawna nazwa uzytkownika lub haslo
 
 
 def sign_up(login, user_password):
@@ -30,9 +30,9 @@ def sign_up(login, user_password):
             username=login, password=generate_password_hash(user_password))
         db.session.add(new_user)
         db.session.commit()
-        return True  # rejestracja pomyslna
+        return new_user.get_clean_version()  # rejestracja pomyslna
     else:
-        return False  # nazwa uzytkownika zajeta lub dane niepoprawne
+        return None  # nazwa uzytkownika zajeta lub dane niepoprawne
 
 
 def sign_out():
