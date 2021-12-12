@@ -1,7 +1,6 @@
 from backend import db
 from sqlalchemy.dialects.mysql import TEXT, INTEGER
 from dataclasses import dataclass
-from copy import deepcopy
 
 
 @dataclass
