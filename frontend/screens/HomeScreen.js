@@ -121,7 +121,7 @@ const HomeScreen = ({navigation}) => {
       />
       <ButtonWithImage
         color="#2F915C"
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Recommendation')}
         text="Ocena rekomendacji"
         imageSrc={require('./resources/img/survey.png')}
       />

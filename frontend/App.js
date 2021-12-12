@@ -5,6 +5,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import {Store} from './Store';
+import RecommendationScreen from './screens/RecommendationScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,15 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen
+            name="Recommendation"
+            component={RecommendationScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#009CCC',
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Store>
