@@ -14,12 +14,13 @@ import ButtonWithImage from './components/ButtonWithImage';
 const HomeScreen = ({navigation}) => {
   const [temp, setTemp] = React.useState(null);
   const [imageSrc, setImageSrc] = React.useState(null);
-  const {state} = useStore();
+  const {state, dispatch} = useStore();
 
   const getTemp = async () => {
     Geolocation.getCurrentPosition(
       async position => {
         const {latitude, longitude} = position.coords;
+        dispatch({type: 'SET_POSITION', payload: {latitude, longitude}});
         const res = await fetch(
           `http://10.0.2.2:5000/weather?latitude=${latitude}&longitude=${longitude}`,
           {
@@ -109,21 +110,24 @@ const HomeScreen = ({navigation}) => {
       <Text style={localStyles.welcomeText}>Co chcesz teraz zrobić?</Text>
       <ButtonWithImage
         color="#7DF5A5"
-        onPress={() => {}}
+        onPress={() => navigation.navigate('PreRecommendation')}
         text="Rekomendacja stroju"
         imageSrc={require('./resources/img/start.png')}
+        disabled={state.position == null}
       />
       <ButtonWithImage
         color="#64DCA0"
         onPress={() => navigation.navigate('Wardrobe')}
         text="Moja szafa"
         imageSrc={require('./resources/img/wardrobe.png')}
+        disabled={false}
       />
       <ButtonWithImage
         color="#2F915C"
-        onPress={() => navigation.navigate('Recommendation')}
+        onPress={() => navigation.navigate('Survey')}
         text="Ocena rekomendacji"
         imageSrc={require('./resources/img/survey.png')}
+        disabled={false}
       />
     </View>
   );

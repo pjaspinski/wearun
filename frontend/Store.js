@@ -6,6 +6,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_USER':
       return {...state, user: action.payload};
+    case 'SET_POSITION':
+      return {...state, position: action.payload};
+    case 'SET_RECOMMENDATION':
+      return {...state, recommendation: action.payload};
   }
   return state;
 };
