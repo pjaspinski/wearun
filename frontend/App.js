@@ -5,13 +5,15 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import {Store} from './Store';
+import SurveyScreen from './screens/SurveyScreen';
 import RecommendationScreen from './screens/RecommendationScreen';
+import PreRecommendationScreen from './screens/PreRecommendationScreen';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <Store initialState={{user: null}}>
+    <Store initialState={{user: null, position: null}}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Login"
@@ -35,12 +37,26 @@ const App = () => {
           />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen
-            name="Recommendation"
-            component={RecommendationScreen}
+            name="Survey"
+            component={SurveyScreen}
             options={{
               headerStyle: {
                 backgroundColor: '#009CCC',
               },
+            }}
+          />
+          <Stack.Screen
+            name="PreRecommendation"
+            component={PreRecommendationScreen}
+          />
+          <Stack.Screen
+            name="Recommendation"
+            component={RecommendationScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#00C3FF',
+              },
+              headerBackVisible: false,
             }}
           />
         </Stack.Navigator>

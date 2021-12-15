@@ -2,9 +2,10 @@ import React from 'react';
 import {Pressable, Image, Text} from 'react-native';
 import utils from '../resources/css/utils';
 
-const ButtonWithImage = ({text, imageSrc, color, onPress}) => {
+const ButtonWithImage = ({text, imageSrc, color, onPress, disabled}) => {
   return (
     <Pressable
+      disabled={disabled}
       style={{...localStyles.mainContainer, backgroundColor: color}}
       onPress={onPress}>
       <Image source={imageSrc} style={localStyles.image} resizeMode="contain" />
