@@ -23,9 +23,16 @@ Na izolację, którą dostarczają ubrania, wpływa 6 czynników:
 
 Naturalne materiały (wełna/bawełna) lepiej odprowadzają pot, więc lepiej chłodzą
 
+
+### [Why is it Harder to Run in Humidity?](https://runningunlocked.com/why-is-it-harder-to-run-in-humidity/)
+
+W wilgotnym otoczeniu pot wolniej odparowuje, więc człowiek gorzej się chłodzi. Przez to organizm produkuje więcej potu, co zostawia mniej energii na bieganie.
+
+Wilgotność poniżej 30% jest uważana za zbyt niską, a powyżej 50% za zbyt wysoką.
+Wilgotność poza przedziałem 30-50 wymaga lżejszego ubioru.
 ## Sposób działania aplikacji
 
-Na podstawie danych o pogodzie (temperatura odczuwalna) i typu treningu (rower jest szybszy, więc jest zimniej) wyznaczana jest wymagana wartość clo. Punktem bazowym do wyznaczania będzie 1 clo przy 11 stopniach (bo często mówi się, że do biegania powinno się ubierać tak jakby było 10 stopni więcej). Jak nie będzie się to sprawdzać, to jakoś doprecyzujemy
+Na podstawie danych o pogodzie (temperatura odczuwalna, wiatr, wilgotność) i typu treningu (rower jest szybszy, więc jest zimniej) wyznaczana jest wymagana wartość clo. Punktem bazowym do wyznaczania będzie 1 clo przy 11 stopniach (bo często mówi się, że do biegania powinno się ubierać tak jakby było 10 stopni więcej). Jak nie będzie się to sprawdzać, to jakoś doprecyzujemy
 
 Dla każdego ciucha jest wyznaczana wartość clo - na podstawie materiału, poziomu ciepła wpisanego przez użytkownika, (?).
 
@@ -35,3 +42,20 @@ Wpływ treningów na wymagane clo:
 
 -   większa prędkość to więcej clo
     ...
+
+### Sposób szukania dobrych zestawów ubrań
+Przeszukiwanie w głąb. Na przykładzie topów:
+Są 3 kategorie: koszulki, bluzy i kurtki
+
+Bierzemy pierwszą koszulkę. Jeżeli jej clo jest odległe o mniej niż akceptowalna odległość od potrzebnego clo, to zapisujemy jako dobry zestaw.
+
+Do koszulki dobieramy pierwszą bluzę. Jeżeli clo zestawu jest odległe o ..., to zapisujemy jako dobry zestaw. Jeżeli jest większe od docelowego clo to cofamy się, bo sprawdzanie dalej nie ma sensu.
+
+Spodni trzeba szukać trochę inaczej. Są 3 kategorie: spodenki, getry i dresy. Spodenki można zakładać na getry, można też założyć same spodenki albo same getry. Dresy można założyć na getry, albo same.
+
+Sprawdzamy w następującej kolejności:
+- same spodenki
+- same getry
+- getry i spodenki
+- dresy
+- getry i dresy
