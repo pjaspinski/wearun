@@ -42,3 +42,20 @@ Wpływ treningów na wymagane clo:
 
 -   większa prędkość to więcej clo
     ...
+
+### Sposób szukania dobrych zestawów ubrań
+Przeszukiwanie w głąb. Na przykładzie topów:
+Są 3 kategorie: koszulki, bluzy i kurtki
+
+Bierzemy pierwszą koszulkę. Jeżeli jej clo jest odległe o mniej niż akceptowalna odległość od potrzebnego clo, to zapisujemy jako dobry zestaw.
+
+Do koszulki dobieramy pierwszą bluzę. Jeżeli clo zestawu jest odległe o ..., to zapisujemy jako dobry zestaw. Jeżeli jest większe od docelowego clo to cofamy się, bo sprawdzanie dalej nie ma sensu.
+
+Spodni trzeba szukać trochę inaczej. Są 3 kategorie: spodenki, getry i dresy. Spodenki można zakładać na getry, można też założyć same spodenki albo same getry. Dresy można założyć na getry, albo same.
+
+Sprawdzamy w następującej kolejności:
+- same spodenki
+- same getry
+- getry i spodenki
+- dresy
+- getry i dresy

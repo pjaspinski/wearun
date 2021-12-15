@@ -12,7 +12,7 @@ def clothing_categories():
     try:
         categories = get_clothing_categories()
     except Exception as e:
-        return e, 400
+        return e.args[0], 400
     return jsonify(categories), 200
 
 
@@ -26,7 +26,7 @@ def clothing_piece():
         image = request.files['image'].read()
         add_clothing_piece(user_id, category_id, name, image, clo)
     except Exception as e:
-        return e, 400
+        return e.args[0], 400
     return Response(status=200)
 
 
@@ -39,10 +39,9 @@ def user_clothes():
         clothes = get_user_clothes(int(user_id))
 
         for clothing_piece in clothes:
-            clothing_piece.image = url_for(
-                'clothing_image', id=clothing_piece.id)
+            replace_image_with_url(clothing_piece)
     except Exception as e:
-        return e, 400
+        return e.args[0], 400
 
     return jsonify(clothes), 200
 
@@ -56,6 +55,6 @@ def clothing_image():
         image = get_clothing_image(id)
 
     except Exception as e:
-        return e, 400
+        return e.args[0], 400
 
     return send_file(BytesIO(image), mimetype='image/jpg', attachment_filename=f'{id}.jpg',), 200

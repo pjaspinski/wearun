@@ -2,10 +2,10 @@ import requests
 import os
 
 
-def get_weather(longitute, latitude):
+def get_weather(longitude, latitude):
     params = {
         'lat': latitude,
-        'lon': longitute,
+        'lon': longitude,
         'appid': os.getenv('OPEN_WEATHER_API_KEY'),
         'units': 'metric'
     }
