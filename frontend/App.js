@@ -6,6 +6,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import {Store} from './Store';
 import RecommendationScreen from './screens/RecommendationScreen';
+import WardrobeScreen from './screens/WardrobeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,15 @@ const App = () => {
             options={{
               headerStyle: {
                 backgroundColor: '#009CCC',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Wardrobe"
+            component={WardrobeScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#64DCA0',
               },
             }}
           />

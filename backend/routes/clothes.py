@@ -30,6 +30,20 @@ def clothing_piece():
     return Response(status=200)
 
 
+@app.route('/clothing_category', methods=['GET'])
+def clothing_category():
+    try:
+        category_id = request.args.get('category_id')
+        assert category_id, 'No category_id param'
+
+        category = get_category(int(category_id))
+
+    except Exception as e:
+        return e.args[0], 400
+
+    return jsonify(category), 200
+
+
 @app.route('/user_clothes', methods=['GET'])
 def user_clothes():
     try:

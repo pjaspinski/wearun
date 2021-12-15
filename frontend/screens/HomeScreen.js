@@ -115,7 +115,7 @@ const HomeScreen = ({navigation}) => {
       />
       <ButtonWithImage
         color="#64DCA0"
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Wardrobe')}
         text="Moja szafa"
         imageSrc={require('./resources/img/wardrobe.png')}
       />
