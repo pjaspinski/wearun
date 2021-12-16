@@ -19,4 +19,4 @@ class User(db.Model):
         return super().__repr__()
 
     def get_clean_version(self):
-        return {'username': self.username}
+        return {'username': self.username, 'id': self.id}
