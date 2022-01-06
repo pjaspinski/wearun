@@ -2,7 +2,7 @@ from .clothes import get_user_clothes_per_category, replace_image_with_url
 from backend.propagators.weather import get_weather
 
 # Temperature with 1 clo.
-BASE_TEMPERATURE = 15
+BASE_TEMPERATURE = 10
 
 # Interval of acceptable humidity (inside this interval no points are substracted)
 GOOD_HUMIDITY = (30, 50)

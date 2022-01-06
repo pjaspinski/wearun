@@ -50,10 +50,10 @@ const WardrobeScreen = ({navigation}) => {
             />
           )}
         />
-        <Pressable style={localStyles.button} onPress={() => addClothes()}>
-          <Text style={localStyles.buttonText}>+</Text>
-        </Pressable>
       </View>
+      <Pressable style={localStyles.button} onPress={() => addClothes()}>
+        <Text style={localStyles.buttonText}>+</Text>
+      </Pressable>
     </View>
   );
 };
@@ -80,21 +80,20 @@ const localStyles = {
     ...utils.flexCenter,
   },
   button: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 100,
     backgroundColor: '#2F915C',
     elevation: 10,
     position: 'absolute',
-    bottom: 5,
-    right: 5,
+    bottom: 10,
+    right: 10,
   },
   buttonText: {
     color: '#fff',
     textTransform: 'uppercase',
-    fontWeight: 'bold',
     fontSize: 40,
   },
 };
