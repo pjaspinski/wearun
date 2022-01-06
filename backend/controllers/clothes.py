@@ -21,6 +21,10 @@ def get_user_clothes(user_id):
     return ClothingPiece.query.filter_by(user_id=user_id).all()
 
 
+def get_category(category_id):
+    return ClothingCategory.query.filter_by(id=category_id).first()
+
+
 def get_clothing_image(id):
     clothing_piece = ClothingPiece.query.filter_by(id=id).first()
 

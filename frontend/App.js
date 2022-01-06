@@ -7,7 +7,9 @@ import HomeScreen from './screens/HomeScreen';
 import {Store} from './Store';
 import SurveyScreen from './screens/SurveyScreen';
 import RecommendationScreen from './screens/RecommendationScreen';
+import WardrobeScreen from './screens/WardrobeScreen';
 import PreRecommendationScreen from './screens/PreRecommendationScreen';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +59,15 @@ const App = () => {
                 backgroundColor: '#00C3FF',
               },
               headerBackVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="Wardrobe"
+            component={WardrobeScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#64DCA0',
+              },
             }}
           />
         </Stack.Navigator>
