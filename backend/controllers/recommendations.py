@@ -22,6 +22,23 @@ CYCLING_MULTIPLIER = 1.3  # Multiplier used if discipline is cycling
 RUNNING_MULTIPLIER = 1.1  # Multiplier used if discipline is running
 
 
+def rate_last_recommendation(user_id, is_good, is_too_warm=None):
+    recommendation = get_last_recommendation(user_id)
+
+    if recommendation is None:
+        raise Exception('This user has no recommendations.')
+
+    if recommendation.is_good is not None:
+        raise Exception(
+            "This user's last recommendation has already been rated.")
+
+    recommendation.is_good = is_good
+    if is_good is False:
+        recommendation.is_too_warm = is_too_warm
+
+    db.session.commit()
+
+
 def get_last_recommendation(user_id):
     return Recommendation.query.filter_by(user_id=user_id).order_by(Recommendation.id.desc()).first()
 
