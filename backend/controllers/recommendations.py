@@ -22,7 +22,11 @@ CYCLING_MULTIPLIER = 1.3  # Multiplier used if discipline is cycling
 RUNNING_MULTIPLIER = 1.1  # Multiplier used if discipline is running
 
 
-def get_recommendation(user_id, training_type, location):
+def get_last_recommendation(user_id):
+    return Recommendation.query.filter_by(user_id=user_id).order_by(Recommendation.id.desc()).first()
+
+
+def new_recommendation(user_id, training_type, location):
     weather = get_weather(**location)
 
     needed_clo = _calculate_needed_clo(weather, training_type)
