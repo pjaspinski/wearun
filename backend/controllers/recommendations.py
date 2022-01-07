@@ -1,5 +1,7 @@
-from .clothes import get_user_clothes_per_category, replace_image_with_url
+from .clothes import get_user_clothes_per_category
 from backend.propagators.weather import get_weather
+from ..db_models.Recommendation import Recommendation
+from backend import db
 
 # Temperature with 1 clo.
 BASE_TEMPERATURE = 10
@@ -12,7 +14,7 @@ ACCEPTABLE_TOP_DIFF = 0.5
 ACCEPTABLE_BOTTOM_DIFF = 0.8
 
 # Added/substracted clo for every Celcius degree above/below base temp
-TEMPERATURE_FACTOR = 0.07
+TEMPERATURE_FACTOR = 0.05
 WIND_FACTOR = 0.04  # Added clo for every km/h of wind
 HUMIDITY_FACTOR = 0.001  # Added clo for every % above 50% or below 30%
 
@@ -35,8 +37,13 @@ def get_recommendation(user_id, training_type, location):
         raise Exception(
             'Not enough clothes to make a precise bottom recommendation.')
 
-    _replace_set_images_with_urls(top)
-    _replace_set_images_with_urls(bottom)
+    _save_recommendation(user_id)
+
+    # Converting objects to dicts to safely replace imgaes with their urls
+    # (without writing urls to db)
+    top = [elem.get_dict() for elem in top]
+    bottom = [elem.get_dict() for elem in bottom]
+
     return {'top': top, 'bottom': bottom}
 
 
@@ -165,6 +172,7 @@ def _check_set_dfs(level, index, current_set, clothing_categories, needed_clo, s
     return
 
 
-def _replace_set_images_with_urls(set):
-    for clothing_piece in set:
-        replace_image_with_url(clothing_piece)
+def _save_recommendation(user_id):
+    recommendation = Recommendation(user_id=user_id)
+    db.session.add(recommendation)
+    db.session.commit()
