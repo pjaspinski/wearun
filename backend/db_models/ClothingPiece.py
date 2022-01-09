@@ -1,6 +1,7 @@
 from backend import db
 from sqlalchemy.dialects.mysql import TEXT, INTEGER, MEDIUMBLOB, DECIMAL
 from dataclasses import dataclass
+from flask.helpers import url_for
 
 
 @dataclass
@@ -25,3 +26,13 @@ class ClothingPiece(db.Model):
 
     def __repr__(self) -> str:
         return super().__repr__()
+
+    def get_dict(self) -> dict:
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'category_id': self.category_id,
+            'name': self.name,
+            'clo': self.clo,
+            'image': url_for('clothing_image', id=self.id)
+        }

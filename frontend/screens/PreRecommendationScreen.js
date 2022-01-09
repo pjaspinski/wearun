@@ -12,7 +12,7 @@ const PreRecommendationScreen = ({navigation}) => {
     const {latitude, longitude} = state.position;
     const {id} = state.user;
     const res = await fetch(
-      `http://10.0.2.2:5000/recommendation?user_id=${id}&training_type=${type}&latitude=${latitude}&longitude=${longitude}`,
+      `http://10.0.2.2:5000/new_recommendation?user_id=${id}&training_type=${type}&latitude=${latitude}&longitude=${longitude}`,
       {
         method: 'GET',
       },

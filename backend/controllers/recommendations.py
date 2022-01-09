@@ -1,5 +1,7 @@
-from .clothes import get_user_clothes_per_category, replace_image_with_url
+from .clothes import get_user_clothes_per_category
 from backend.propagators.weather import get_weather
+from ..db_models.Recommendation import Recommendation
+from backend import db
 
 # Temperature with 1 clo.
 BASE_TEMPERATURE = 10
@@ -12,18 +14,43 @@ ACCEPTABLE_TOP_DIFF = 0.5
 ACCEPTABLE_BOTTOM_DIFF = 0.8
 
 # Added/substracted clo for every Celcius degree above/below base temp
-TEMPERATURE_FACTOR = 0.07
+TEMPERATURE_FACTOR = 0.05
 WIND_FACTOR = 0.04  # Added clo for every km/h of wind
 HUMIDITY_FACTOR = 0.001  # Added clo for every % above 50% or below 30%
 
 CYCLING_MULTIPLIER = 1.3  # Multiplier used if discipline is cycling
 RUNNING_MULTIPLIER = 1.1  # Multiplier used if discipline is running
 
+# Opinions on how many last recommendations should be taken into consideration
+CONSIDERED_OPINIONS = 10
+OPINION_FACTOR = 0.02  # Added/substracted per opinion
 
-def get_recommendation(user_id, training_type, location):
+
+def rate_last_recommendation(user_id, is_good, is_too_warm=None):
+    recommendation = get_last_recommendation(user_id)
+
+    if recommendation is None:
+        raise Exception('This user has no recommendations.')
+
+    if recommendation.is_good is not None:
+        raise Exception(
+            "This user's last recommendation has already been rated.")
+
+    recommendation.is_good = is_good
+    if is_good is False:
+        recommendation.is_too_warm = is_too_warm
+
+    db.session.commit()
+
+
+def get_last_recommendation(user_id):
+    return Recommendation.query.filter_by(user_id=user_id).order_by(Recommendation.id.desc()).first()
+
+
+def new_recommendation(user_id, training_type, location):
     weather = get_weather(**location)
 
-    needed_clo = _calculate_needed_clo(weather, training_type)
+    needed_clo = _calculate_needed_clo(weather, training_type, user_id)
 
     top = _pick_top(needed_clo, user_id)
     if top is None:
@@ -35,12 +62,17 @@ def get_recommendation(user_id, training_type, location):
         raise Exception(
             'Not enough clothes to make a precise bottom recommendation.')
 
-    _replace_set_images_with_urls(top)
-    _replace_set_images_with_urls(bottom)
+    _save_recommendation(user_id)
+
+    # Converting objects to dicts to safely replace imgaes with their urls
+    # (without writing urls to db)
+    top = [elem.get_dict() for elem in top]
+    bottom = [elem.get_dict() for elem in bottom]
+
     return {'top': top, 'bottom': bottom}
 
 
-def _calculate_needed_clo(weather, training_type):
+def _calculate_needed_clo(weather, training_type, user_id):
     clo = 1.0
 
     # temperature
@@ -61,6 +93,9 @@ def _calculate_needed_clo(weather, training_type):
         hum_diff = humidity - GOOD_HUMIDITY[1]
 
     clo += hum_diff * HUMIDITY_FACTOR
+
+    # modifier based on opinions of 10 last recommendations
+    clo += _get_opinions_factor(user_id)
 
     # training type
     if training_type == 'cycling':
@@ -165,6 +200,22 @@ def _check_set_dfs(level, index, current_set, clothing_categories, needed_clo, s
     return
 
 
-def _replace_set_images_with_urls(set):
-    for clothing_piece in set:
-        replace_image_with_url(clothing_piece)
+def _save_recommendation(user_id):
+    recommendation = Recommendation(user_id=user_id)
+    db.session.add(recommendation)
+    db.session.commit()
+
+
+def _get_opinions_factor(user_id):
+    value = 0
+    recommendations = Recommendation.query.filter_by(user_id=user_id).order_by(
+        Recommendation.id.desc()).limit(CONSIDERED_OPINIONS)
+
+    for rec in recommendations:
+        if rec.is_good == False:
+            if rec.is_too_warm:
+                value -= OPINION_FACTOR
+            else:
+                value += OPINION_FACTOR
+
+    return value
