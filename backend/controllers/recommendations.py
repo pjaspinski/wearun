@@ -21,6 +21,10 @@ HUMIDITY_FACTOR = 0.001  # Added clo for every % above 50% or below 30%
 CYCLING_MULTIPLIER = 1.3  # Multiplier used if discipline is cycling
 RUNNING_MULTIPLIER = 1.1  # Multiplier used if discipline is running
 
+# Opinions on how many last recommendations should be taken into consideration
+CONSIDERED_OPINIONS = 10
+OPINION_FACTOR = 0.02  # Added/substracted per opinion
+
 
 def rate_last_recommendation(user_id, is_good, is_too_warm=None):
     recommendation = get_last_recommendation(user_id)
@@ -46,7 +50,7 @@ def get_last_recommendation(user_id):
 def new_recommendation(user_id, training_type, location):
     weather = get_weather(**location)
 
-    needed_clo = _calculate_needed_clo(weather, training_type)
+    needed_clo = _calculate_needed_clo(weather, training_type, user_id)
 
     top = _pick_top(needed_clo, user_id)
     if top is None:
@@ -68,7 +72,7 @@ def new_recommendation(user_id, training_type, location):
     return {'top': top, 'bottom': bottom}
 
 
-def _calculate_needed_clo(weather, training_type):
+def _calculate_needed_clo(weather, training_type, user_id):
     clo = 1.0
 
     # temperature
@@ -89,6 +93,9 @@ def _calculate_needed_clo(weather, training_type):
         hum_diff = humidity - GOOD_HUMIDITY[1]
 
     clo += hum_diff * HUMIDITY_FACTOR
+
+    # modifier based on opinions of 10 last recommendations
+    clo += _get_opinions_factor(user_id)
 
     # training type
     if training_type == 'cycling':
@@ -197,3 +204,18 @@ def _save_recommendation(user_id):
     recommendation = Recommendation(user_id=user_id)
     db.session.add(recommendation)
     db.session.commit()
+
+
+def _get_opinions_factor(user_id):
+    value = 0
+    recommendations = Recommendation.query.filter_by(user_id=user_id).order_by(
+        Recommendation.id.desc()).limit(CONSIDERED_OPINIONS)
+
+    for rec in recommendations:
+        if rec.is_good == False:
+            if rec.is_too_warm:
+                value -= OPINION_FACTOR
+            else:
+                value += OPINION_FACTOR
+
+    return value
