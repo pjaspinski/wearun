@@ -3,8 +3,8 @@ from werkzeug.utils import send_file
 from backend import app
 from backend.controllers.clothes import *
 from flask import jsonify, Response, request, send_file
-from operator import itemgetter
 from io import BytesIO
+import base64
 
 
 @app.route('/clothing_categories', methods=['GET'])
@@ -18,14 +18,16 @@ def clothing_categories():
 
 @app.route('/clothing_piece', methods=['PUT'])
 def clothing_piece():
-    data = request.form
     try:
-        user_id, category_id, name, clo = itemgetter(
-            'user_id', 'category_id', 'name', 'clo')(data)
-
-        image = request.files['image'].read()
+        user_id = request.form['user_id']
+        category_id = request.form['category_id']
+        name = request.form['name']
+        clo = request.form['user_id']
+        imageBase64 = request.form['image']
+        image = base64.b64decode(imageBase64)
         add_clothing_piece(user_id, category_id, name, image, clo)
     except Exception as e:
+        print(e)
         return e.args[0], 400
     return Response(status=200)
 
