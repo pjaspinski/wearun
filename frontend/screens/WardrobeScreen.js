@@ -9,7 +9,7 @@ const WardrobeScreen = ({navigation}) => {
   const {state} = useStore();
 
   const addClothes = () => {
-    // here code to add clothing;
+    navigation.navigate('AddScreen');
   };
 
   React.useEffect(() => {
