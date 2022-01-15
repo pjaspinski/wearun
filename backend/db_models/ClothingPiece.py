@@ -3,7 +3,6 @@ from sqlalchemy.dialects.mysql import TEXT, INTEGER, MEDIUMBLOB, DECIMAL
 from dataclasses import dataclass
 from flask.helpers import url_for
 
-
 @dataclass
 class ClothingPiece(db.Model):
     id: int

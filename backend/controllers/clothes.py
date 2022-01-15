@@ -5,7 +5,7 @@ from backend.db_models.ClothingCategory import ClothingCategory
 from backend import db
 
 
-def get_clothing_categories():
+def get_clothing_categories(): 
     return ClothingCategory.query.all()
 
 
@@ -28,7 +28,7 @@ def get_category(category_id):
 def get_clothing_image(id):
     clothing_piece = ClothingPiece.query.filter_by(id=id).first()
 
-    if ClothingPiece is None:
+    if clothing_piece is None:
         raise Exception('Clothing piece with this id does not exist.')
 
     return clothing_piece.image
