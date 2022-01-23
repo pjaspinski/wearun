@@ -1,14 +1,15 @@
 import React from 'react';
 import {View, Image, Text, ToastAndroid, ActivityIndicator} from 'react-native';
 import utils from '../resources/css/utils';
+import {fetchFromApi} from '../../AjaxDao';
 
 const Shelf = ({name, image, categoryID}) => {
   const [type, setType] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [category, setCategory] = React.useState('');
   const setCategoryInfo = async () => {
-    const res = await fetch(
-      `http://10.0.2.2:5000/clothing_category?category_id=${categoryID}`,
+    const res = await fetchFromApi(
+      `clothing_category?category_id=${categoryID}`,
       {
         method: 'GET',
       },

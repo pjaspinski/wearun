@@ -11,6 +11,7 @@ import {
 import colors from './resources/css/colors';
 import formElements from './resources/css/formElements';
 import {useStore} from '../Store';
+import {fetchFromApi} from '../AjaxDao';
 
 const LoginScreen = ({navigation}) => {
   const {dispatch} = useStore();
@@ -29,7 +30,7 @@ const LoginScreen = ({navigation}) => {
       password,
     };
 
-    const res = await fetch('http://10.0.2.2:5000/login', {
+    const res = await fetchFromApi('login', {
       headers: {
         'Content-Type': 'application/json',
       },

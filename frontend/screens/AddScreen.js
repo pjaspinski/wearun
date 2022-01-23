@@ -11,6 +11,7 @@ import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'react-native-image-picker';
 import Slider from '@react-native-community/slider';
 import {useStore} from '../Store';
+import {fetchFromApi} from '../AjaxDao';
 
 const AddScreen = ({navigation}) => {
   const [name, setName] = React.useState('');
@@ -38,7 +39,7 @@ const AddScreen = ({navigation}) => {
     formData.append('user_id', user_id);
     formData.append('image', image);
     console.log(formData);
-    const res = await fetch('http://10.0.2.2:5000/clothing_piece', {
+    const res = await fetchFromApi(clothing_piece, {
       method: 'PUT',
       headers: {
         Accept: `text/plain`,
@@ -74,7 +75,7 @@ const AddScreen = ({navigation}) => {
   }, [pickerResponse]);
 
   const getCategories = async () => {
-    const res = await fetch('http://10.0.2.2:5000/clothing_categories', {
+    const res = await fetchFromApi('clothing_categories', {
       method: 'GET',
     });
     if (res.status !== 200) {

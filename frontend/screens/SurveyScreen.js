@@ -4,6 +4,7 @@ import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import {useStore} from '../Store.js';
 import styleUtils from './resources/css/utils.js';
 import ButtonWithImage from './components/ButtonWithImage.js';
+import {fetchFromApi} from '../AjaxDao.js';
 
 const SurveyScreen = ({navigation}) => {
   const [isSatisfied, setSatisfaction] = React.useState('');
@@ -15,12 +16,9 @@ const SurveyScreen = ({navigation}) => {
 
   const getLastRecommendation = async () => {
     const {id} = state.user;
-    const res = await fetch(
-      `http://10.0.2.2:5000/last_recommendation?user_id=${id}`,
-      {
-        method: 'GET',
-      },
-    );
+    const res = await fetchFromApi(`last_recommendation?user_id=${id}`, {
+      method: 'GET',
+    });
 
     if (res.status !== 200) {
       setStage('no-recommendation');
@@ -67,8 +65,7 @@ const SurveyScreen = ({navigation}) => {
       body['is_too_warm'] = reason === 'hot' ? true : false;
     }
 
-    console.log(body);
-    await fetch('http://10.0.2.2:5000/last_recommendation', {
+    await fetchFromApi('last_recommendation', {
       headers: {
         'Content-Type': 'application/json',
       },

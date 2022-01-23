@@ -11,6 +11,7 @@ import {
 import colors from './resources/css/colors';
 import formElements from './resources/css/formElements';
 import {useStore} from '../Store';
+import {fetchFromApi} from '../AjaxDao';
 
 export default function RegisterScreen({navigation}) {
   const {dispatch} = useStore();
@@ -38,7 +39,7 @@ export default function RegisterScreen({navigation}) {
       password,
     };
 
-    const res = await fetch('http://10.0.2.2:5000/register', {
+    const res = await fetchFromApi('register', {
       headers: {
         'Content-Type': 'application/json',
       },
