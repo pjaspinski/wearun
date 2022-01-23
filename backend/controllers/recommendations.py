@@ -176,6 +176,14 @@ def _get_set_clo(set):
 
 
 def _check_set_dfs(level, index, current_set, clothing_categories, needed_clo, sets, tolerance):
+    # If there are no clothes in this category - check next one
+    if len(clothing_categories[level]) == 0:
+        # But only if it exists
+        if level != len(clothing_categories) - 1:
+            _check_set_dfs(level + 1, index, current_set,
+                           clothing_categories, needed_clo, sets, tolerance)
+        return
+
     clothing_piece = clothing_categories[level][index]
 
     set_clo = _get_set_clo(current_set) + float(clothing_piece.clo)

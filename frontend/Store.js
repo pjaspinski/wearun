@@ -10,6 +10,8 @@ const reducer = (state, action) => {
       return {...state, position: action.payload};
     case 'SET_RECOMMENDATION':
       return {...state, recommendation: action.payload};
+    case 'SET_AUTH_TOKEN':
+      return {...state, auth_token: action.payload};
   }
   return state;
 };

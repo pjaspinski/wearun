@@ -11,6 +11,7 @@ import {
 import colors from './resources/css/colors';
 import formElements from './resources/css/formElements';
 import {useStore} from '../Store';
+import {fetchFromApi} from '../AjaxDao';
 
 export default function RegisterScreen({navigation}) {
   const {dispatch} = useStore();
@@ -38,7 +39,7 @@ export default function RegisterScreen({navigation}) {
       password,
     };
 
-    const res = await fetch('http://10.0.2.2:5000/register', {
+    const res = await fetchFromApi('register', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -48,8 +49,9 @@ export default function RegisterScreen({navigation}) {
 
     switch (res.status) {
       case 200:
-        const user = await res.json();
+        const {user, token} = await res.json();
         dispatch({type: 'SET_USER', payload: user});
+        dispatch({type: 'SET_AUTH_TOKEN', payload: token});
         navigation.navigate('Home');
         return;
       case 404:

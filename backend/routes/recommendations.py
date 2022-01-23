@@ -1,9 +1,11 @@
 from backend import app
 from flask import request, jsonify, Response
 from backend.controllers.recommendations import rate_last_recommendation, new_recommendation, get_last_recommendation
+from flask_jwt_extended import jwt_required
 
 
 @app.route('/new_recommendation', methods={'GET'})
+@jwt_required()
 def _new_recommendation():
     try:
         user_id = int(request.args['user_id'])
@@ -28,6 +30,7 @@ def _new_recommendation():
 
 
 @app.route('/last_recommendation', methods=['GET', 'POST'])
+@jwt_required()
 def _last_recommendation():
     try:
         if request.method == 'GET':

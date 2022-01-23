@@ -5,9 +5,11 @@ from backend.controllers.clothes import *
 from flask import jsonify, Response, request, send_file
 from io import BytesIO
 import base64
+from flask_jwt_extended import jwt_required
 
 
 @app.route('/clothing_categories', methods=['GET'])
+@jwt_required()
 def clothing_categories():
     try:
         categories = get_clothing_categories()
@@ -17,6 +19,7 @@ def clothing_categories():
 
 
 @app.route('/clothing_piece', methods=['PUT'])
+@jwt_required()
 def clothing_piece():
     try:
         user_id = request.form['user_id']
@@ -33,6 +36,7 @@ def clothing_piece():
 
 
 @app.route('/clothing_category', methods=['GET'])
+@jwt_required()
 def clothing_category():
     try:
         category_id = request.args.get('category_id')
@@ -47,6 +51,7 @@ def clothing_category():
 
 
 @app.route('/user_clothes', methods=['GET'])
+@jwt_required()
 def user_clothes():
     try:
         user_id = request.args.get('id')
@@ -63,6 +68,7 @@ def user_clothes():
 
 
 @app.route('/clothing_image', methods=['GET'])
+@jwt_required()
 def clothing_image():
     try:
         id = request.args.get('id')

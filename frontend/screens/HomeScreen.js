@@ -10,6 +10,7 @@ import utils from './resources/css/utils';
 import {useStore} from '../Store';
 import Geolocation from 'react-native-geolocation-service';
 import ButtonWithImage from './components/ButtonWithImage';
+import {fetchFromApiWithAuth} from '../AjaxDao';
 
 const HomeScreen = ({navigation}) => {
   const [temp, setTemp] = React.useState(null);
@@ -21,8 +22,9 @@ const HomeScreen = ({navigation}) => {
       async position => {
         const {latitude, longitude} = position.coords;
         dispatch({type: 'SET_POSITION', payload: {latitude, longitude}});
-        const res = await fetch(
-          `http://10.0.2.2:5000/weather?latitude=${latitude}&longitude=${longitude}`,
+        const res = await fetchFromApiWithAuth(
+          state,
+          `weather?latitude=${latitude}&longitude=${longitude}`,
           {
             method: 'GET',
           },
