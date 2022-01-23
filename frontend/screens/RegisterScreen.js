@@ -49,8 +49,9 @@ export default function RegisterScreen({navigation}) {
 
     switch (res.status) {
       case 200:
-        const user = await res.json();
+        const {user, token} = await res.json();
         dispatch({type: 'SET_USER', payload: user});
+        dispatch({type: 'SET_AUTH_TOKEN', payload: token});
         navigation.navigate('Home');
         return;
       case 404:

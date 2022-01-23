@@ -3,7 +3,7 @@ import {View, Text, FlatList, Pressable, ToastAndroid} from 'react-native';
 import Shelf from './components/Shelf';
 import utils from './resources/css/utils';
 import {useStore} from '../Store';
-import {fetchFromApi} from '../AjaxDao';
+import {fetchFromApiWithAuth} from '../AjaxDao';
 
 const WardrobeScreen = ({navigation}) => {
   const [clothes, setClothes] = React.useState([]);
@@ -18,9 +18,13 @@ const WardrobeScreen = ({navigation}) => {
   }, []);
 
   const getClothes = async () => {
-    const res = await fetchFromApi(`user_clothes?id=${state.user.id}`, {
-      method: 'GET',
-    });
+    const res = await fetchFromApiWithAuth(
+      state,
+      `user_clothes?id=${state.user.id}`,
+      {
+        method: 'GET',
+      },
+    );
     if (res.status !== 200) {
       ToastAndroid.show(
         'Nie udało się pobrać informacji o ubraniach.',

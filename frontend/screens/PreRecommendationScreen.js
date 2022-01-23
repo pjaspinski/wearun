@@ -3,7 +3,7 @@ import {View, Text, ActivityIndicator} from 'react-native';
 import styleUtils from './resources/css/utils.js';
 import {useStore} from '../Store.js';
 import ButtonWithImage from './components/ButtonWithImage.js';
-import {fetchFromApi} from '../AjaxDao.js';
+import {fetchFromApiWithAuth} from '../AjaxDao.js';
 
 const PreRecommendationScreen = ({navigation}) => {
   const [stage, setStage] = React.useState('typeSelection');
@@ -12,7 +12,8 @@ const PreRecommendationScreen = ({navigation}) => {
   const getRecommendation = async type => {
     const {latitude, longitude} = state.position;
     const {id} = state.user;
-    const res = await fetchFromApi(
+    const res = await fetchFromApiWithAuth(
+      state,
       `new_recommendation?user_id=${id}&training_type=${type}&latitude=${latitude}&longitude=${longitude}`,
       {
         method: 'GET',
