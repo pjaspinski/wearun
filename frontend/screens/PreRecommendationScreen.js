@@ -42,14 +42,14 @@ const PreRecommendationScreen = ({navigation}) => {
           <Text style={styleUtils.smallHeading}>Wybierz rodzaj treningu:</Text>
           <ButtonWithImage
             color="#00C3FF"
-            onPress={() => selectTrainingType('cycling')}
+            onPress={() => selectTrainingType('running')}
             text="Bieganie"
             imageSrc={require('./resources/img/runner-white.png')}
             disabled={false}
           />
           <ButtonWithImage
             color="#00C3FF"
-            onPress={() => selectTrainingType('running')}
+            onPress={() => selectTrainingType('cycling')}
             text="Kolarstwo"
             imageSrc={require('./resources/img/bicycle-white.png')}
             disabled={false}
