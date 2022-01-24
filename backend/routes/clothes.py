@@ -68,7 +68,6 @@ def user_clothes():
 
 
 @app.route('/clothing_image', methods=['GET'])
-@jwt_required()
 def clothing_image():
     try:
         id = request.args.get('id')
