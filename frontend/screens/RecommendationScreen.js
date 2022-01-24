@@ -3,6 +3,8 @@ import {Text, ScrollView} from 'react-native';
 import {useStore} from '../Store.js';
 import ImageCard from './components/ImageCard';
 import {HeaderBackButton} from '@react-navigation/elements';
+import {buildImageUrl} from '../AjaxDao.js';
+
 const RecommendationScreen = ({navigation}) => {
   const {state} = useStore();
 
@@ -27,7 +29,7 @@ const RecommendationScreen = ({navigation}) => {
           return (
             <ImageCard
               key={item.id}
-              imageUri={`http://10.0.2.2:5000${item.image}`}
+              imageUri={buildImageUrl(item.image)}
               title={item.name}
             />
           );

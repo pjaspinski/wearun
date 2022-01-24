@@ -5,7 +5,7 @@ from backend.db_models.ClothingCategory import ClothingCategory
 from backend import db
 
 
-def get_clothing_categories(): 
+def get_clothing_categories():
     return ClothingCategory.query.all()
 
 

@@ -30,7 +30,6 @@ def clothing_piece():
         image = base64.b64decode(imageBase64)
         add_clothing_piece(user_id, category_id, name, image, clo)
     except Exception as e:
-        print(e)
         return e.args[0], 400
     return Response(status=200)
 
@@ -68,7 +67,6 @@ def user_clothes():
 
 
 @app.route('/clothing_image', methods=['GET'])
-@jwt_required()
 def clothing_image():
     try:
         id = request.args.get('id')

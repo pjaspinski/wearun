@@ -15,3 +15,7 @@ export const fetchFromApiWithAuth = async (state, url, options) => {
 
   return await fetchFromApi(url, newOptions);
 };
+
+export const buildImageUrl = uri => {
+  return `${config.api.host}${uri}`;
+};

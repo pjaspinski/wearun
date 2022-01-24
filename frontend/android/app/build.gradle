@@ -1,13 +1,13 @@
+project.ext.envConfigFiles = [
+    debug: ".env",
+    release: ".env.production",
+]
+
 apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
-project.ext.envConfigFiles = [
-    debug: ".env",
-    release: ".env",
-    productionRelease: ".env.production"
-]
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -156,9 +156,9 @@ android {
 		release {
 			if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
 				storeFile file(MYAPP_UPLOAD_STORE_FILE)
-				storePassword System.getenv("MYAPP_UPLOAD_STORE_PASSWORD")
+				storePassword MYAPP_UPLOAD_STORE_PASSWORD
 				keyAlias MYAPP_UPLOAD_KEY_ALIAS
-				keyPassword System.getenv("MYAPP_UPLOAD_KEY_PASSWORD")
+				keyPassword MYAPP_UPLOAD_KEY_PASSWORD
 			}
         }
         debug {
@@ -183,9 +183,6 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-        productionRelease {
-            initWith release
         }
     }
 

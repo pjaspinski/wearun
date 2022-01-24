@@ -3,7 +3,7 @@ import {View, Text, FlatList, Pressable, ToastAndroid} from 'react-native';
 import Shelf from './components/Shelf';
 import utils from './resources/css/utils';
 import {useStore} from '../Store';
-import {fetchFromApiWithAuth} from '../AjaxDao';
+import {fetchFromApiWithAuth, buildImageUrl} from '../AjaxDao';
 
 const WardrobeScreen = ({navigation}) => {
   const [clothes, setClothes] = React.useState([]);
@@ -47,7 +47,7 @@ const WardrobeScreen = ({navigation}) => {
             <Shelf
               key={item.id}
               name={item.name}
-              image={`http://10.0.2.2:5000${item.image}`}
+              image={buildImageUrl(item.image)}
               categoryID={item.category_id}
             />
           )}

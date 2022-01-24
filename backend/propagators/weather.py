@@ -14,6 +14,6 @@ def get_weather(longitude, latitude):
 
     if res.status_code == 200:
         data = res.json()
-        data['icon_url'] = f"http://openweathermap.org/img/wn/{data['weather'][0]['icon']}@4x.png"
+        data['icon_url'] = f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@4x.png"
         return data
     return None
