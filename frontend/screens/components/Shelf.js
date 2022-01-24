@@ -32,7 +32,8 @@ const Shelf = ({name, image, categoryID}) => {
 
   React.useEffect(() => {
     setCategoryInfo();
-  }, []);
+  });
+
   return (
     <View style={localStyles.mainContainer}>
       {loading ? (
