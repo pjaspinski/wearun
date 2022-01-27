@@ -14,6 +14,7 @@ def init_app():
     app.config.from_object(Config())
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 86400
     jwt = JWTManager(app)
 
     db.init_app(app)
