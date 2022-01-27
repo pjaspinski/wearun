@@ -49,7 +49,7 @@ const Shelf = ({name, image, categoryID}) => {
           />
           <Text style={localStyles.name}>{name}</Text>
           <Text style={localStyles.category}>
-            {type}: {category}
+            {type === 'top' ? 'góra' : 'dół'}: {category}
           </Text>
         </>
       )}

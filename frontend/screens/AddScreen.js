@@ -51,7 +51,7 @@ const AddScreen = ({navigation}) => {
       setLoading(true);
       setTimeout(() => {
         navigation.navigate('Wardrobe', {reload: true});
-      }, 1000);
+      }, 1500);
       return;
     }
     ToastAndroid.show('Nie udało się zapisać.', ToastAndroid.SHORT);
@@ -133,7 +133,7 @@ const AddScreen = ({navigation}) => {
             categories.map(cat => {
               return (
                 <Picker.Item
-                  label={`${cat.type}: ${cat.name}`}
+                  label={`${cat.type === 'top' ? 'góra' : 'dół'}: ${cat.name}`}
                   value={cat.id}
                   key={cat.id}
                 />

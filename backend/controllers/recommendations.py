@@ -19,7 +19,7 @@ WIND_FACTOR = 0.04  # Added clo for every km/h of wind
 HUMIDITY_FACTOR = 0.001  # Added clo for every % above 50% or below 30%
 
 CYCLING_MULTIPLIER = 1.3  # Multiplier used if discipline is cycling
-RUNNING_MULTIPLIER = 1.1  # Multiplier used if discipline is running
+RUNNING_MULTIPLIER = 1.0  # Multiplier used if discipline is running
 
 # Opinions on how many last recommendations should be taken into consideration
 CONSIDERED_OPINIONS = 10

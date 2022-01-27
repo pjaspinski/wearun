@@ -24,15 +24,15 @@ def clothing_categories():
 def clothing_piece():
     try:
         user_id = request.form['user_id']
-        category_id = request.form['category_id']
+        category_id = int(request.form['category_id'])
         name = request.form['name']
-        cloForm = request.form['user_id']
+        cloForm = int(request.form['clo'])
         clo = get_clo(cloForm, category_id)
         imageBase64 = request.form['image']
         image_data = base64.b64decode(imageBase64)
         # changing size
         image_thumbnail = Image.open(BytesIO(image_data))
-        image_thumbnail.thumbnail((500, 500))
+        image_thumbnail.thumbnail((350, 350))
         with BytesIO() as output:
             image_thumbnail.save(output, format='JPEG')
             image = output.getvalue()

@@ -10,8 +10,10 @@ import RecommendationScreen from './screens/RecommendationScreen';
 import WardrobeScreen from './screens/WardrobeScreen';
 import PreRecommendationScreen from './screens/PreRecommendationScreen';
 import AddScreen from './screens/AddScreen';
+import {LogBox} from 'react-native';
 
 const Stack = createNativeStackNavigator();
+LogBox.ignoreAllLogs();
 
 const App = () => {
   return (
