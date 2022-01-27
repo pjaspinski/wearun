@@ -15,7 +15,7 @@ import {fetchFromApiWithAuth} from '../AjaxDao';
 
 const AddScreen = ({navigation}) => {
   const [name, setName] = React.useState('');
-  const [category_id, setCategoryID] = React.useState();
+  const [category_id, setCategoryID] = React.useState(1);
   const [categories, setCategories] = React.useState([]);
   const [image, setImage] = React.useState();
   const [user_id, setUserID] = React.useState();
@@ -31,7 +31,6 @@ const AddScreen = ({navigation}) => {
       );
       return;
     }
-    setClo(clo * 0.2);
     const formData = new FormData();
     formData.append('name', name);
     formData.append('clo', clo);
@@ -131,7 +130,7 @@ const AddScreen = ({navigation}) => {
         <Slider
           style={localStyles.slider}
           minimumValue={1}
-          maximumValue={10}
+          maximumValue={5}
           step={1}
           onValueChange={value => setClo(value)}
           minimumTrackTintColor="#FFFFFF"

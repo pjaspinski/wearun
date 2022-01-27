@@ -25,7 +25,8 @@ def clothing_piece():
         user_id = request.form['user_id']
         category_id = request.form['category_id']
         name = request.form['name']
-        clo = request.form['user_id']
+        cloForm = request.form['user_id']
+        clo = get_clo(cloForm, category_id)
         imageBase64 = request.form['image']
         image = base64.b64decode(imageBase64)
         add_clothing_piece(user_id, category_id, name, image, clo)
