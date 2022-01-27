@@ -44,3 +44,14 @@ def get_clothing_categories_per_type():
 
 def replace_image_with_url(clothing_piece):
     clothing_piece.image = url_for('clothing_image', id=clothing_piece.id)
+
+
+def get_clo(cloForm, category_id):
+    if category_id == 1 or category_id == 4:
+        return 0.1 + (cloForm * 0.1)
+    elif category_id == 2 or category_id == 6:
+        return 0.6 + (cloForm * 0.1)
+    elif category_id == 3 or category_id == 5:
+        return 0.9 + (cloForm * 0.1)
+    else:
+        return 0.3 + (cloForm * 0.1)
