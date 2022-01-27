@@ -5,7 +5,7 @@ import utils from './resources/css/utils';
 import {useStore} from '../Store';
 import {fetchFromApiWithAuth, buildImageUrl} from '../AjaxDao';
 
-const WardrobeScreen = ({navigation}) => {
+const WardrobeScreen = ({navigation, route}) => {
   const [clothes, setClothes] = React.useState([]);
   const {state} = useStore();
 
@@ -14,8 +14,11 @@ const WardrobeScreen = ({navigation}) => {
   };
 
   React.useEffect(() => {
-    getClothes();
-  }, []);
+    if (route.params?.reload) {
+      navigation.setParams({reload: false});
+      getClothes();
+    }
+  }, [route.params]);
 
   const getClothes = async () => {
     const res = await fetchFromApiWithAuth(
@@ -40,6 +43,7 @@ const WardrobeScreen = ({navigation}) => {
       <Text style={localStyles.title}>Moja szafa</Text>
       <View style={localStyles.wardrobe}>
         <FlatList
+          style={{width: '100%'}}
           data={clothes}
           numColumns={2}
           keyExtractor={item => item.id}
@@ -79,6 +83,7 @@ const localStyles = {
   },
   wardrobe: {
     flex: 1,
+    width: '100%',
     ...utils.flexCenter,
   },
   button: {

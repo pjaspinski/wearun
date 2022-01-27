@@ -2,24 +2,23 @@ import React from 'react';
 import {Text, ScrollView} from 'react-native';
 import {useStore} from '../Store.js';
 import ImageCard from './components/ImageCard';
-import {HeaderBackButton} from '@react-navigation/elements';
 import {buildImageUrl} from '../AjaxDao.js';
+import {CommonActions} from '@react-navigation/native';
 
 const RecommendationScreen = ({navigation}) => {
   const {state} = useStore();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: props => (
-        <HeaderBackButton
-          {...props}
-          onPress={() => {
-            navigation.navigate('Home');
-          }}
-        />
-      ),
+  React.useEffect(() => {
+    navigation.dispatch(state => {
+      const routes = state.routes.filter(r => r.name !== 'PreRecommendation');
+
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
+      });
     });
-  }, [navigation]);
+  }, []);
 
   return (
     <ScrollView style={styles.bg}>

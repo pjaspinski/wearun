@@ -71,7 +71,6 @@ const HomeScreen = ({navigation}) => {
     const status = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     );
-    console.log(status);
 
     if (status === PermissionsAndroid.RESULTS.GRANTED) {
       getTemp();
@@ -106,7 +105,7 @@ const HomeScreen = ({navigation}) => {
           }}
         />
         <Text style={localStyles.weatherText}>
-          {Math.floor(temp) || '--'}°C
+          {temp ? Math.floor(temp) : '--'}°C
         </Text>
       </View>
       <Text style={localStyles.welcomeText}>Co chcesz teraz zrobić?</Text>
@@ -119,7 +118,7 @@ const HomeScreen = ({navigation}) => {
       />
       <ButtonWithImage
         color="#64DCA0"
-        onPress={() => navigation.navigate('Wardrobe')}
+        onPress={() => navigation.navigate('Wardrobe', {reload: true})}
         text="Moja szafa"
         imageSrc={require('./resources/img/wardrobe.png')}
         disabled={false}

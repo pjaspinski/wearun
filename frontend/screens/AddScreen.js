@@ -6,6 +6,7 @@ import {
   Pressable,
   ToastAndroid,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'react-native-image-picker';
@@ -19,9 +20,11 @@ const AddScreen = ({navigation}) => {
   const [categories, setCategories] = React.useState([]);
   const [image, setImage] = React.useState();
   const [user_id, setUserID] = React.useState();
-  const [clo, setClo] = React.useState(0);
+  const [clo, setClo] = React.useState(1);
   const [pickerResponse, setPickerResponse] = React.useState(null);
   const {state} = useStore();
+  const [imageUri, setImageUri] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
   const save = async () => {
     if (!name || !category_id || !clo || !image) {
@@ -45,7 +48,10 @@ const AddScreen = ({navigation}) => {
       body: formData,
     });
     if (res.status === 200) {
-      navigation.navigate('Wardrobe');
+      setLoading(true);
+      setTimeout(() => {
+        navigation.navigate('Wardrobe', {reload: true});
+      }, 1000);
       return;
     }
     ToastAndroid.show('Nie udało się zapisać.', ToastAndroid.SHORT);
@@ -67,8 +73,15 @@ const AddScreen = ({navigation}) => {
 
   React.useEffect(() => {
     if (pickerResponse?.assets) {
-      console.log(pickerResponse);
-      setImage(pickerResponse.assets[0].base64);
+      if ('image/jpeg' === pickerResponse.assets[0].type) {
+        setImage(pickerResponse.assets[0].base64);
+        setImageUri(pickerResponse.assets[0].uri);
+      } else {
+        ToastAndroid.show(
+          'Tylko obrazy w formacie JPG i JPEG są dozwolone.',
+          ToastAndroid.SHORT,
+        );
+      }
     }
   }, [pickerResponse]);
 
@@ -85,9 +98,9 @@ const AddScreen = ({navigation}) => {
     }
     const data = await res.json();
     setCategories(data);
+    setCategoryID(data[0].id);
   };
 
-  const uri = pickerResponse?.assets && pickerResponse.assets[0].uri;
   return (
     <View style={localStyles.bg}>
       <Text style={localStyles.title}>Dodaj ubranie</Text>
@@ -101,7 +114,9 @@ const AddScreen = ({navigation}) => {
         <View style={localStyles.imageView}>
           <Image
             style={localStyles.image}
-            source={uri ? {uri} : require('./resources/img/empty.jpg')}
+            source={
+              imageUri ? {uri: imageUri} : require('./resources/img/empty.jpg')
+            }
           />
         </View>
         <Pressable style={localStyles.buttonImage} onPress={addImage}>
@@ -137,7 +152,11 @@ const AddScreen = ({navigation}) => {
           maximumTrackTintColor="#2F915C"
         />
         <Pressable style={localStyles.button} onPress={() => save()}>
-          <Text style={localStyles.buttonText}>Zapisz</Text>
+          {loading ? (
+            <ActivityIndicator size="large" color="#fff"></ActivityIndicator>
+          ) : (
+            <Text style={localStyles.buttonText}>Zapisz</Text>
+          )}
         </Pressable>
       </View>
     </View>
@@ -186,11 +205,12 @@ const localStyles = {
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 10,
+    height: 50,
   },
   buttonImageText: {
     color: '#fff',
     textTransform: 'uppercase',
-    fontWeight: '400',
+    fontWeight: '600',
     fontSize: 20,
   },
   category: {
@@ -220,12 +240,13 @@ const localStyles = {
     elevation: 10,
     marginTop: 50,
     padding: 10,
+    height: 50,
   },
   buttonText: {
     color: '#fff',
     textTransform: 'uppercase',
     fontWeight: '600',
-    fontSize: 28,
+    fontSize: 20,
   },
 };
 

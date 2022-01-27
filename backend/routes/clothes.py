@@ -6,6 +6,7 @@ from flask import jsonify, Response, request, send_file
 from io import BytesIO
 import base64
 from flask_jwt_extended import jwt_required
+from PIL import Image
 
 
 @app.route('/clothing_categories', methods=['GET'])
@@ -28,8 +29,15 @@ def clothing_piece():
         cloForm = request.form['user_id']
         clo = get_clo(cloForm, category_id)
         imageBase64 = request.form['image']
-        image = base64.b64decode(imageBase64)
-        add_clothing_piece(user_id, category_id, name, image, clo)
+        image_data = base64.b64decode(imageBase64)
+        # changing size
+        image_thumbnail = Image.open(BytesIO(image_data))
+        image_thumbnail.thumbnail((500, 500))
+        with BytesIO() as output:
+            image_thumbnail.save(output, format='JPEG')
+            image = output.getvalue()
+        add_clothing_piece(user_id, category_id, name,
+                           image, clo)
     except Exception as e:
         return e.args[0], 400
     return Response(status=200)

@@ -58,7 +58,6 @@ const App = () => {
               headerStyle: {
                 backgroundColor: '#00C3FF',
               },
-              headerBackVisible: false,
             }}
           />
           <Stack.Screen
